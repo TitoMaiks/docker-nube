@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  plex:
+    image: linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000              # Ajusta al UID de tu usuario
+      - PGID=1000              # Ajusta al GID de tu usuario
+      - VERSION=docker
+      - TZ=Europe/Madrid       # Ajusta tu zona horaria
+      # - PLEX_CLAIM=claim-xxxxxx  # Opcional: para registrar Plex automáticamente
+    volumes:
+      - /ruta/donde/guardar/config:/config
+      - /ruta/donde/guardar/data:/data
+    restart: unless-stopped
