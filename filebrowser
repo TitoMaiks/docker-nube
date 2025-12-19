@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  filebrowser:
+    image: hurlenko/filebrowser
+    user: "${UID}:${GID}"
+    ports:
+      - 443:8080
+    volumes:
+      - /ruta donde se guarda:/data
+      - /ruta donde se guarda:/config
+    environment:
+      - FB_BASEURL=/filebrowser
+    restart: always
+
+    En un archivo .env aparte
+    UID=0
+    GID=0
