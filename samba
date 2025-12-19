@@ -1,0 +1,41 @@
+ORDEN CORRECTO PARA INSTALAR SAMBA Y COMPARTIR UNA CARPETA (Ubuntu/Debian)
+
+1) Actualizar el sistema
+sudo apt update
+
+2) Instalar Samba
+sudo apt install samba -y
+
+3) Crear la carpeta compartida
+sudo mkdir -p /srv/nombre de la carpeta compartida
+
+4) Dar permisos a la carpeta
+sudo chmod -R 777 /srv/nombre de la carpeta compartida
+
+5) Editar la configuración de Samba
+sudo nano /etc/samba/smb.conf
+
+Agregar al final del archivo:
+
+[Compartida]
+path = /srv/nombre de la carpeta compartida
+browseable = yes
+writable = yes
+read only = no
+guest ok = yes
+
+6) Verificar la configuración
+testparm
+
+7) Reiniciar el servicio Samba
+sudo systemctl restart smbd
+
+8) Habilitar Samba en el firewall
+sudo ufw allow samba
+sudo ufw reload
+
+9) Obtener la IP del servidor
+ip a
+
+10) Conectarse desde otro equipo (Windows)
+\\IP_DEL_SERVIDOR\nombre de la carpeta compartida
