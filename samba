@@ -41,6 +41,9 @@ ip a
 sudo chown -R tu_usuario:tu_usuario /ruta carpeta compartida
 sudo chmod -R 770 /ruta carpeta compartida
 
-10) Conectarse desde otro equipo (Windows)
+12)Reiniciar Samba
+sudo systemctl restart smbd nmbd
+
+13) Conectarse desde otro equipo (Windows)
 \\IP_DEL_SERVIDOR\nombre de la carpeta compartida (puede ser que se llame "Compartida" en windows)
 
