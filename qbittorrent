@@ -1,0 +1,27 @@
+services:
+  # Gestores de Descargas (Torrent)
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    hostname: qbittorrent
+    restart: unless-stopped
+    volumes:
+      - ${ARRPATH}qbittorrent/config:/config
+      - ${ARRPATH}downloads:/downloads
+    ports:
+      - "8081:8081"       # Interfaz Web
+      - "6881:6881"       # Puerto TCP para Torrents
+      - "6881:6881/udp"   # Puerto UDP para Torrents
+    environment:
+      - WEBUI_PORT=8081
+      - TORRENTING_PORT=6881
+    env_file:
+      - ./.env
+
+#EN UN .ENV METER LO SIGUIENTE
+ARRPATH=/media/
+
+# Variables globales
+TZ=Europe/Madrid
+PUID=1000
+PGID=1000
