@@ -1,0 +1,29 @@
+# 1. Eliminar repositorio incorrecto de Docker (Ubuntu)
+sudo rm /etc/apt/sources.list.d/docker.list
+
+# 2. Actualizar repos e instalar dependencias
+sudo apt update
+sudo apt install ca-certificates curl gnupg
+
+# 3. Crear directorio para claves
+sudo install -m 0755 -d /etc/apt/keyrings
+
+# 4. Descargar clave GPG de Docker
+curl -fsSL https://download.docker.com/linux/debian/gpg | \
+sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+# 5. Dar permisos a la clave
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+# 6. Añadir repositorio de Docker (Bookworm)
+echo "deb [arch=$(dpkg --print-architecture) \
+signed-by=/etc/apt/keyrings/docker.gpg] \
+https://download.docker.com/linux/debian bookworm stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# 7. Actualizar repositorios
+sudo apt update
+
+# 8. Instalar Docker y componentes
+sudo apt install docker-ce docker-ce-cli containerd.io \
+docker-buildx-plugin docker-compose-plugin
