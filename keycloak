@@ -22,8 +22,8 @@ services:
       KC_DB_PASSWORD: keycloakpassword
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME: localhost
-      KC_ADMIN: admin
-      KC_ADMIN_PASSWORD: adminpassword
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: adminpassword
     command: start-dev
     ports:
       - "8080:8080"
