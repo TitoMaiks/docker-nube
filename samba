@@ -1,49 +1,24 @@
-ORDEN CORRECTO PARA INSTALAR SAMBA Y COMPARTIR UNA CARPETA (Ubuntu/Debian)
-
-1) Actualizar el sistema
 sudo apt update
-
-2) Instalar Samba
 sudo apt install samba -y
-
-3) Crear la carpeta compartida
-sudo mkdir -p /srv/nombre de la carpeta compartida
-
-4) Dar permisos a la carpeta
-sudo chmod -R 777 /srv/nombre de la carpeta compartida
-
-5) Editar la configuración de Samba
+sudo mkdir -p /datos/nube
 sudo nano /etc/samba/smb.conf
 
-Agregar al final del archivo:
+Meter esto en el archivo de smb.conf
+[Nube]
+   path = /datos/nube
+   browseable = yes
+   writable = yes
+   read only = no
+   guest ok = no
+   valid users = tu_usuario
+   force user = tu_usuario
+   create mask = 0664
+   directory mask = 0775
 
-[Compartida]
-path = /srv/nombre de la carpeta compartida
-browseable = yes
-writable = yes
-read only = no
-guest ok = yes
-
-6) Verificar la configuración
+sudo smbpasswd -a tu_usuario
+sudo smbpasswd -e tu_usuario
+sudo chown -R tu_usuario:tu_usuario /datos/nube
+sudo chmod -R 770 /datos/nube
 testparm
-
-7) Reiniciar el servicio Samba
-sudo systemctl restart smbd
-
-8) Habilitar Samba en el firewall
-sudo ufw allow samba
-sudo ufw reload
-
-9) Obtener la IP del servidor
-ip a
-
-11)Permisos usuario
-sudo chown -R tu_usuario:tu_usuario /ruta carpeta compartida
-sudo chmod -R 770 /ruta carpeta compartida
-
-12)Reiniciar Samba
 sudo systemctl restart smbd nmbd
-
-13) Conectarse desde otro equipo (Windows)
-\\IP_DEL_SERVIDOR\nombre de la carpeta compartida (puede ser que se llame "Compartida" en windows)
-
+sudo systemctl enable smbd nmbd
